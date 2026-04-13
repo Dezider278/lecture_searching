@@ -24,14 +24,20 @@ def linear_search(searched_seq, num):
     empty["Indexy:"] = indexes
     empty["Pocet:"] = count
     return empty
+def binary_search(numbers, number):
+    for i,j in enumerate(numbers):
+        if j == number:
+            return i , j
+    return None
 
 
 def main():
 
-    return linear_search(read_data("sequential.json", "unordered_numbers"), 0)
+    return binary_search(read_data("sequential.json", "ordered_numbers"), 2)
 
 sequential_data = main()
 print(sequential_data)
 
 if __name__ == "__main__":
     main()
+    print(read_data("sequential.json", "ordered_numbers"))
