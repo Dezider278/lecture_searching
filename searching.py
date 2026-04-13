@@ -1,7 +1,14 @@
+from math import floor
 from pathlib import Path
 import json
-
+import time
 from pkg_resources import non_empty_lines
+from generators import unordered_sequence
+from generators import ordered_sequence
+
+length = [10,100,1000]
+unordered_sequences = [unordered_sequence(length[0]),unordered_sequence(length[1]),unordered_sequence(length[2])]
+ordered_sequences = [ordered_sequence(length[0]),ordered_sequence(length[1]),ordered_sequence(length[2])]
 
 
 def read_data(file_name, field):
@@ -25,19 +32,45 @@ def linear_search(searched_seq, num):
     empty["Pocet:"] = count
     return empty
 def binary_search(numbers, number):
-    for i,j in enumerate(numbers):
-        if j == number:
-            return i , j
+    start = 0
+    end = len(numbers)-1
+
+    while start <= end:
+        stred = (start + end) / 2
+        if numbers[round(stred)] == number:
+            return round(stred), number
+        elif numbers[round(stred)] < number:
+            start = stred +1
+        elif numbers[round(stred)] > number:
+            end = stred - 1
     return None
 
 
 def main():
+    ordered_sequences_times = []
+    unordered_sequences_times = []
+    result1 = []
+    result2 = []
+    for i in unordered_sequences:
+        start = time.perf_counter()
+        l = linear_search(i,5)
+        result1.append(l)
+        end = time.perf_counter()
 
-    return binary_search(read_data("sequential.json", "ordered_numbers"), 2)
+        duration = end - start
+        unordered_sequences_times.append(duration)
+    for i in ordered_sequences:
+        print(i)
+        start = time.perf_counter()
+        l = binary_search(i, 5)
+        result2.append(l)
+        end = time.perf_counter()
+
+        duration = end - start
+        ordered_sequences_times.append(duration)
+    return unordered_sequences_times, ordered_sequences_times , result1, result2
 
 sequential_data = main()
 print(sequential_data)
 
-if __name__ == "__main__":
-    main()
-    print(read_data("sequential.json", "ordered_numbers"))
+# if __name__ == "__main__":
