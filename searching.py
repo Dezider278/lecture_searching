@@ -45,13 +45,33 @@ def binary_search(numbers, number):
             end = stred - 1
     return None
 
+# def pattern_search(seq, looking):
+#     result = []
+#     for i in range(len(seq)-len(looking)+1):
+#         if seq[i:i+len(looking)] == looking:
+#             result.append(i)
+#     return result
 def pattern_search(seq, looking):
-    result = []
-    for i in range(len(seq)-len(looking)):
-        if seq[i:i+len(looking)] == looking:
-            result.append(i)
-    return result
+    result = set()
+    m = len(looking)
+    n = len(seq)
 
+    i = 0
+    while i <= n - m:
+        j = 0
+        match = True
+
+        while j < m:
+            if seq[i + j] != looking[j]:
+                match = False
+                break
+            j += 1
+
+        if match:
+            result.add(i)
+        i += 1
+
+    return result
 
 #
 # def main():
